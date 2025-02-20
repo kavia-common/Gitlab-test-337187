@@ -35,28 +35,28 @@ run_unit_test:
     paths:
       - unit-test-coverage.xml
 
-#run_tools_test:
-#  stage: unit_test
-#  image: ${COMMON_IMAGE}
-#  allow_failure: false
-#  script:
-#  - |
-#      echo "
-#      machine dev.iopsys.eu
-#      login gitlab-ci-token
-#      password $CI_JOB_TOKEN
-#      " > ~/.netrc
-#  - "./gitlab-ci/pipeline_setup.sh"
-#  - "./gitlab-ci/setup.sh ms"
+run_tools_test:
+  stage: unit_test
+  image: ${COMMON_IMAGE}
+  allow_failure: false
+  script:
+  - |
+      echo "
+      machine dev.iopsys.eu
+      login gitlab-ci-token
+      password $CI_JOB_TOKEN
+      " > ~/.netrc
+  - "./gitlab-ci/pipeline_setup.sh"
+  - "./gitlab-ci/setup.sh ms"
 #  - "./gitlab-ci/tools-test.sh"
-#  - "./gitlab-ci/generate_supported_dm.sh"
+  - "./gitlab-ci/generate_supported_dm.sh"
 
-#  artifacts:
-#      when: always
-#      paths:
-#          - out/datamodel_default.xml
-#          - out/datamodel_hdm.xml
-#          - out/datamodel.xls
+  artifacts:
+      when: always
+      paths:
+          - out/datamodel_default.xml
+          - out/datamodel_hdm.xml
+          - out/datamodel.xls
 
 run_libbbfdm_api_functional_test:
   stage: functional_test

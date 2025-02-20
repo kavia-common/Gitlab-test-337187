@@ -66,7 +66,7 @@ int bbfdm_load_internal_plugin(struct bbfdm_context *bbfdm_ctx, DM_MAP_OBJ *dyna
 			return -1;
 		}
 
-		if (dynamic_obj[i].root_obj != NULL) {
+		if (dynamic_obj[i].root_obj != NULL && bbfdm_ctx != NULL) {
 			struct dm_obj_s *entryobj = dynamic_obj[i].root_obj;
 			for (; (entryobj && entryobj->obj); entryobj++) {
 				char path[MAX_DM_PATH] = {0};
