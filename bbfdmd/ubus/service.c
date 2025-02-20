@@ -303,7 +303,7 @@ char *get_reference_data(const char *path, const char *method_name)
 
 	blobmsg_add_string(&req_buf, "path", path);
 
-	BBFDM_DEBUG("### ubus call %s %s '%s' ###", ubus_obj, method_name, blobmsg_format_json_indent(req_buf.head, true, -1));
+	//BBFDM_DEBUG("### ubus call %s %s '%s' ###", ubus_obj, method_name, blobmsg_format_json_indent(req_buf.head, true, -1));
 
 	BBFDM_UBUS_INVOKE_SYNC(ubus_obj, method_name, req_buf.head, 2000, reference_data_callback, &reference_value);
 

@@ -126,7 +126,7 @@ void run_sync_call(const char *ubus_obj, const char *ubus_method, struct blob_at
 		}
 	}
 
-	BBFDM_DEBUG("### ubus call %s %s '%s' ###", ubus_obj, ubus_method, blobmsg_format_json_indent(req_buf.head, true, -1));
+	//BBFDM_DEBUG("### ubus call %s %s '%s' ###", ubus_obj, ubus_method, blobmsg_format_json_indent(req_buf.head, true, -1));
 
 	BBFDM_UBUS_INVOKE_SYNC(ubus_obj, ubus_method, req_buf.head, 2000, sync_callback, bb_response);
 

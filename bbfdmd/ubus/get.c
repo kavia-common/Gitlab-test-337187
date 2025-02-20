@@ -297,7 +297,7 @@ void run_async_call(struct async_request_context *ctx, const char *ubus_obj, str
 	tracker->timeout.cb = handle_request_timeout;
 	uloop_timeout_set(&tracker->timeout, SERVICE_CALL_TIMEOUT);
 
-	BBFDM_DEBUG("### ubus call %s %s '%s' ###", ubus_obj, ctx->ubus_method, blobmsg_format_json_indent(req_buf.head, true, -1));
+	//BBFDM_DEBUG("### ubus call %s %s '%s' ###", ubus_obj, ctx->ubus_method, blobmsg_format_json_indent(req_buf.head, true, -1));
 
 	if (ubus_invoke_async(ctx->ubus_ctx, id, ctx->ubus_method, req_buf.head, &tracker->async_request)) {
 		BBFDM_ERR("Failed to invoke async method for object: %s", tracker->request_name);
