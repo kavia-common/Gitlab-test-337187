@@ -25,6 +25,7 @@
 #include "cli.h"
 
 extern struct list_head registered_services;
+extern int g_log_level;
 
 static const struct blobmsg_policy bbfdm_policy[] = {
 	[BBFDM_PATH] = { .name = "path", .type = BLOBMSG_TYPE_STRING },
@@ -189,7 +190,6 @@ int main(int argc, char **argv)
 {
 	struct ubus_context ubus_ctx = {0};
 	char *cli_argv[4] = {0};
-	int log_level = LOG_ERR;
 	int err = 0, ch, cli_argc = 0, i;
 
 	while ((ch = getopt(argc, argv, "hc:l:")) != -1) {
@@ -202,9 +202,9 @@ int main(int argc, char **argv)
 			break;
 		case 'l':
 			if (optarg) {
-				log_level = (int)strtod(optarg, NULL);
-				if (log_level < 0 || log_level > 7)
-					log_level = 3;
+				g_log_level = (int)strtod(optarg, NULL);
+				if (g_log_level < 0 || g_log_level > 7)
+					g_log_level = 3;
 			}
 			break;
 		case 'h':
@@ -221,7 +221,7 @@ int main(int argc, char **argv)
 
 	openlog(BBFDM_UBUS_OBJECT, LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
 
-	setlogmask(LOG_UPTO(log_level));
+	setlogmask(LOG_UPTO(g_log_level));
 
 	err = ubus_connect_ctx(&ubus_ctx, NULL);
 	if (err != UBUS_STATUS_OK) {

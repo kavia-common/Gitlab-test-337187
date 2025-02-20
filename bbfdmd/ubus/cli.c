@@ -140,10 +140,8 @@ static void __ubus_callback(struct ubus_request *req, int msgtype __attribute__(
 		} else if (strcmp(cli_data->cmd, "instances") == 0) {
 			printf("%s\n", name);
 		} else if (strcmp(cli_data->cmd, "schema") == 0) {
-			//char *type = tb[2] ? blobmsg_get_string(tb[2]) : "";
-			//int cmd = get_dm_type(type);
-
-			//printf("%s %s %s\n", name, type, (cmd != DMT_EVENT && cmd != DMT_COMMAND) ? data : "0"); //TODO
+			char *type = tb[2] ? blobmsg_get_string(tb[2]) : "xsd:string";
+			printf("%s %s\n", name, type);
 		}
 
 		cli_data->ubus_status = true;

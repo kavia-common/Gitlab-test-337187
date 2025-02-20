@@ -16,6 +16,8 @@
 #include "service.h"
 #include "get.h"
 
+extern int g_log_level;
+
 static void add_linker_entry(struct async_request_context *ctx, const char *linker_path, const char *linker_value)
 {
 	struct linker_args *linker = calloc(1, sizeof(struct linker_args));
@@ -297,7 +299,11 @@ void run_async_call(struct async_request_context *ctx, const char *ubus_obj, str
 	tracker->timeout.cb = handle_request_timeout;
 	uloop_timeout_set(&tracker->timeout, SERVICE_CALL_TIMEOUT);
 
-	//BBFDM_DEBUG("### ubus call %s %s '%s' ###", ubus_obj, ctx->ubus_method, blobmsg_format_json_indent(req_buf.head, true, -1));
+	if (g_log_level == LOG_DEBUG) {
+		char *json_str = blobmsg_format_json_indent(req_buf.head, true, -1);
+		BBFDM_DEBUG("### ubus call %s %s '%s' ###", ubus_obj, ctx->ubus_method, json_str);
+		BBFDM_FREE(json_str);
+	}
 
 	if (ubus_invoke_async(ctx->ubus_ctx, id, ctx->ubus_method, req_buf.head, &tracker->async_request)) {
 		BBFDM_ERR("Failed to invoke async method for object: %s", tracker->request_name);

@@ -22,6 +22,8 @@
 
 LIST_HEAD(registered_services);
 
+extern int g_log_level;
+
 static void add_service_to_list(const char *name, int service_proto, service_object_t *objects, size_t count, bool is_unified)
 {
 	service_entry_t *service = NULL;
@@ -303,7 +305,11 @@ char *get_reference_data(const char *path, const char *method_name)
 
 	blobmsg_add_string(&req_buf, "path", path);
 
-	//BBFDM_DEBUG("### ubus call %s %s '%s' ###", ubus_obj, method_name, blobmsg_format_json_indent(req_buf.head, true, -1));
+	if (g_log_level == LOG_DEBUG) {
+		char *json_str = blobmsg_format_json_indent(req_buf.head, true, -1);
+		BBFDM_DEBUG("### ubus call %s %s '%s' ###", ubus_obj, method_name, json_str);
+		BBFDM_FREE(json_str);
+	}
 
 	BBFDM_UBUS_INVOKE_SYNC(ubus_obj, method_name, req_buf.head, 2000, reference_data_callback, &reference_value);
 

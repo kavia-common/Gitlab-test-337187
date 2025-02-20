@@ -187,7 +187,7 @@ static int plugin_leaf_onlyobj_match(DMOBJECT_ARGS)
 
 static int plugin_obj_nextlevel_match(DMOBJECT_ARGS)
 {
-	if (strcmp(dmctx->in_param, "Device") == 0 && strcmp(dmctx->in_value, "core") != 0)
+	if (DM_STRCMP(dmctx->in_param, "Device") == 0 && DM_STRCMP(dmctx->in_value, "core") != 0)
 		return FAULT_9005;
 
 	unsigned int current_object_dot_num = count_occurrences(node->current_object, '.');
@@ -268,7 +268,7 @@ static int plugin_leaf_wildcard_match(DMOBJECT_ARGS)
 
 static int plugin_obj_wildcard_nextlevel_match(DMOBJECT_ARGS)
 {
-	if (strcmp(dmctx->in_param, "Device") == 0 && strcmp(dmctx->in_value, "core") != 0)
+	if (DM_STRCMP(dmctx->in_param, "Device") == 0 && DM_STRCMP(dmctx->in_value, "core") != 0)
 		return FAULT_9005;
 
 	unsigned int current_object_dot_num = count_occurrences(node->current_object, '.');
@@ -1117,7 +1117,7 @@ static int mobj_get_name(DMOBJECT_ARGS)
 	char *refparam = node->current_object;
 	char *perm = permission->val;
 
-	if (strcmp(node->current_object, ROOT_NODE) == 0 && strcmp(dmctx->in_value, "core") != 0)
+	if (DM_STRCMP(node->current_object, ROOT_NODE) == 0 && DM_STRCMP(dmctx->in_value, "core") != 0)
 		return 0;
 
 	if (permission->get_permission != NULL)
@@ -1201,7 +1201,7 @@ static int mobj_get_name_in_obj(DMOBJECT_ARGS)
 	if (!node->matched)
 		return FAULT_9005;
 
-	if (strcmp(node->current_object, ROOT_NODE) == 0 && strcmp(dmctx->in_value, "core") != 0)
+	if (DM_STRCMP(node->current_object, ROOT_NODE) == 0 && DM_STRCMP(dmctx->in_value, "core") != 0)
 		return 0;
 
 	if (dmctx->iswildcard) {
